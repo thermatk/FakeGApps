@@ -22,5 +22,5 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
-    compile files('/home/thermatk/dev/android/studiows/FakeGapps/libs/XposedBridgeApi-20150213.jar')
+    compile files('libs/XposedBridgeApi-20150213.jar')
 }
