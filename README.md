@@ -5,9 +5,11 @@ Used in combinaton with [µg GmsCore](https://github.com/microg/android_packages
 ## Installation
 
 * Install Xposed 
+
 ..* For Lollipop (5.1 and 5.1.1) from http://forum.xda-developers.com/xposed/super-alpha-posted-permission-xposed-t3072979
 ..* For Lollipop (5.0) from http://forum.xda-developers.com/showthread.php?t=3034811
 ..* For version below Lollipop using Xposed installer from http://repo.xposed.info/module/de.robv.android.xposed.installer
+
 * Install this FakeGApps module (see 'releases') and enable it in Xposed Installer under 'Modules'
 * Install FakeStore from http://own.darkcloud.ca:90/Android-Builds/
 * Install latest GmsCore build 'play-services-core-debug.apk' from http://files.brnmod.rocks/apps/GmsCore/Latest/
