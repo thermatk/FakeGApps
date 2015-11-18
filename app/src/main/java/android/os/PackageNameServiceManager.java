@@ -1,5 +1,7 @@
 package android.os;
 
+import com.android.server.PackageNameService;
+
 import java.lang.reflect.Method;
 import de.robv.android.xposed.XposedBridge;
 
@@ -20,7 +22,7 @@ public final class PackageNameServiceManager {
         try {
             Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
             Method getService = ServiceManager.getDeclaredMethod("getService", String.class);
-            service = IPackageNameService.Stub.asInterface((IBinder) getService.invoke(null, "packagename.service"));
+            service = IPackageNameService.Stub.asInterface((IBinder) getService.invoke(null, PackageNameService.SERVICE_NAME));
         } catch (Throwable ex) {
             XposedBridge.log("FakeGApps: Unable to get a reference to the package name service");
         }

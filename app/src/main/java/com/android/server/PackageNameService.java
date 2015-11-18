@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.os.IPackageNameService;
 import android.os.RemoteException;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -13,6 +14,8 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
 public class PackageNameService extends IPackageNameService.Stub {
+    public static final String SERVICE_NAME = "packagename.service";
+
     private final Context context;
 
     public static void inject() {
@@ -22,41 +25,43 @@ public class PackageNameService extends IPackageNameService.Stub {
                     new XC_MethodHook() {
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) {
-                            final ClassLoader loader = Thread.currentThread().getContextClassLoader();
-                            XposedBridge.hookAllConstructors(
-                                    XposedHelpers.findClass("com.android.server.am.ActivityManagerService", loader),
-                                    new XC_MethodHook() {
-                                        @Override
-                                        protected void afterHookedMethod(MethodHookParam param) {
-                                            register((Context) param.getResult());
-                                        }
-                                    }
-                            );
+                            register(Thread.currentThread().getContextClassLoader());
                         }
                     }
             );
         } else {
-            XposedBridge.hookAllMethods(
-                    XposedHelpers.findClass("com.android.server.am.ActivityManagerService", null),
-                    "main",
-                    new XC_MethodHook() {
-                        @Override
-                        protected final void afterHookedMethod(final MethodHookParam param) {
-                            register((Context) param.getResult());
-                        }
-                    }
-            );
+            register(null);
         }
     }
 
-    private static void register(Context context) {
+    private static void register(ClassLoader loader) {
         try {
-            Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
-            Method addService = ServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
-            addService.invoke(null, "packagename.service", new PackageNameService(context));
+            Class<?> ActivityManagerService = XposedHelpers.findClass("com.android.server.am.ActivityManagerService", loader);
+            XposedBridge.hookMethod(
+                    ActivityManagerService.getDeclaredMethod("setSystemProcess"),
+                    new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(MethodHookParam param) {
+                            try {
+                                Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
+
+                                Method addService = ServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
+                                addService.invoke(null, SERVICE_NAME, new PackageNameService(getContext(param.thisObject)));
+                            } catch (Throwable ex) {
+                                XposedBridge.log("FakeGApps: Adding the package name service failed.");
+                            }
+                        }
+                    }
+            );
         } catch (Throwable ex) {
             XposedBridge.log("FakeGApps: Adding the package name service failed.");
         }
+    }
+
+    private static Context getContext(Object object) throws NoSuchFieldException, IllegalAccessException {
+        Field mContext = object.getClass().getDeclaredField("mContext");
+        mContext.setAccessible(true);
+        return (Context) mContext.get(object);
     }
 
     public PackageNameService(Context context) {
