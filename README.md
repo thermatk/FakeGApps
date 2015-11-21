@@ -1,5 +1,7 @@
 # FakeGApps by thermatk
 
+Xposed Repo: http://repo.xposed.info/module/com.thermatk.android.xf.fakegapps
+
 Used in combinaton with [µg GmsCore](https://github.com/microg/android_packages_apps_GmsCore) to enable Google Cloud Messaging (GCM) and much more.
 
 This tutorial describes only the installation process to get GCM working. The also avaiable Google Play Store replacement Blankstore is not discussed here.
@@ -7,13 +9,11 @@ This tutorial describes only the installation process to get GCM working. The al
 ## Installation for Android with root access and without Gapps
 
 * Install Xposed 
-    * For Lollipop (5.1 and 5.1.1) from http://forum.xda-developers.com/xposed/super-alpha-posted-permission-xposed-t3072979
-
-    * For Lollipop (5.0) from http://forum.xda-developers.com/showthread.php?t=3034811
+    * For Lollipop and Marshmallow from http://forum.xda-developers.com/showthread.php?t=3034811
 
     * For version below Lollipop using Xposed installer from http://repo.xposed.info/module/de.robv.android.xposed.installer
 
-* Install this FakeGApps module (see 'releases') and enable it in Xposed Installer under 'Modules'
+* Install this FakeGApps module from Xposed Repo(or releases) and enable it in Xposed Installer under 'Modules'
 * Install FakeStore from http://own.darkcloud.ca:90/Android-Builds/ instead you can use Blankstore (see below)
 * Install latest GmsCore build 'play-services-core-debug.apk' from http://files.brnmod.rocks/apps/GmsCore/Latest/
 * Reboot and dial in your phone app \*#\*#CHECKIN#\*#\* to register GCM
