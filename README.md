@@ -7,7 +7,7 @@ This tutorial describes only the installation process to get GCM working. The al
 ## Installation for Android with root access and without Gapps
 
 * Install Xposed 
-    * For Lollipop (5.1 and 5.1.1) from http://forum.xda-developers.com/xposed/super-alpha-posted-permission-xposed-t3072979
+    * For Lollipop (5.1 and 5.1.1) from http://forum.xda-developers.com/showthread.php?t=3034811
 
     * For Lollipop (5.0) from http://forum.xda-developers.com/showthread.php?t=3034811
 
