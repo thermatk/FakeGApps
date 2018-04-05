@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "com.thermatk.android.xf.fakegapps"
@@ -20,6 +19,6 @@ android {
 }
 
 dependencies {
-    provided 'de.robv.android.xposed:api:82'
-    provided 'de.robv.android.xposed:api:82:sources'
+    compileOnly 'de.robv.android.xposed:api:82'
+    compileOnly 'de.robv.android.xposed:api:82:sources'
 }
