@@ -14,8 +14,8 @@ import de.robv.android.xposed.XposedHelpers;
 public class FakeSignatures implements IXposedHookZygoteInit {
     @Override
     public void initZygote(StartupParam startupParam) {
-        final Class<?> PackageParser = XposedHelpers.findClass("android.content.pm.PackageParser", null);
-        XposedBridge.hookAllMethods(PackageParser, "generatePackageInfo", new XC_MethodHook() {
+        final Class<?> ApplicationPackageManager = XposedHelpers.findClass("android.app.ApplicationPackageManager", null);
+        XposedBridge.hookAllMethods(ApplicationPackageManager, "getPackageInfo", new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) {
                 PackageInfo pi = (PackageInfo) param.getResult();
