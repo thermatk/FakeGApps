@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lsposed_scope" >
+        <item>android</item>
+        <item>com.google.android.gms</item>
+        <item>com.android.vending</item>
+    </string-array>
+</resources>
