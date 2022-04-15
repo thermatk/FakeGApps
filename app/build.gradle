@@ -7,8 +7,8 @@ android {
         applicationId "com.thermatk.android.xf.fakegapps"
         minSdkVersion 15
         targetSdkVersion 32
-        versionCode 4
-        versionName "3.0"
+        versionCode 5
+        versionName "3.1"
     }
     signingConfigs {
         release {
