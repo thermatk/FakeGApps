@@ -15,13 +15,7 @@ public class FakeSignatures implements IXposedHookLoadPackage {
         if (!loadedPackage.packageName.equals("android"))
             return;
 
-        Class<?> PackageManagerService;
-        try {
-            PackageManagerService = XposedHelpers.findClass("com.android.server.pm.PackageManagerService.ComputerEngine", loadedPackage.classLoader);
-        } catch (Exception e) {
-            PackageManagerService = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", loadedPackage.classLoader);
-        }
-        XposedBridge.hookAllMethods(PackageManagerService, "generatePackageInfo", new XC_MethodHook() {
+        XC_MethodHook hook = new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) {
                 PackageInfo pi = (PackageInfo) param.getResult();
@@ -35,6 +29,16 @@ public class FakeSignatures implements IXposedHookLoadPackage {
                     }
                 }
             }
-        });
+        };
+
+        Class<?> PackageManagerServiceComputer = null;
+        try {
+            PackageManagerServiceComputer = XposedHelpers.findClass("com.android.server.pm.PackageManagerService.ComputerEngine", loadedPackage.classLoader);
+        } catch (Exception ignored) {}
+        if (PackageManagerServiceComputer != null) {
+            XposedBridge.hookAllMethods(PackageManagerServiceComputer, "generatePackageInfo", hook);
+        }
+        final Class<?> PackageManagerService = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", loadedPackage.classLoader);
+        XposedBridge.hookAllMethods(PackageManagerService, "generatePackageInfo", hook);
     }
 }
