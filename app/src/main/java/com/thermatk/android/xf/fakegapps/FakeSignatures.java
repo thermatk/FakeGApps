@@ -2,6 +2,7 @@ package com.thermatk.android.xf.fakegapps;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.Signature;
+import android.os.Build;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
@@ -31,14 +32,9 @@ public class FakeSignatures implements IXposedHookLoadPackage {
             }
         };
 
-        Class<?> PackageManagerServiceComputer = null;
-        try {
-            PackageManagerServiceComputer = XposedHelpers.findClass("com.android.server.pm.PackageManagerService.ComputerEngine", loadedPackage.classLoader);
-        } catch (Exception ignored) {}
-        if (PackageManagerServiceComputer != null) {
-            XposedBridge.hookAllMethods(PackageManagerServiceComputer, "generatePackageInfo", hook);
-        }
-        final Class<?> PackageManagerService = XposedHelpers.findClass("com.android.server.pm.PackageManagerService", loadedPackage.classLoader);
-        XposedBridge.hookAllMethods(PackageManagerService, "generatePackageInfo", hook);
+        String classToHook = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ?
+                "com.android.server.pm.PackageManagerService.ComputerEngine" : "com.android.server.pm.PackageManagerService";
+        final Class<?> hookedClass = XposedHelpers.findClass(classToHook, loadedPackage.classLoader);
+        XposedBridge.hookAllMethods(hookedClass, "generatePackageInfo", hook);
     }
 }
