@@ -1,21 +1,38 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "com.thermatk.android.xf.fakegapps"
         minSdkVersion 15
-        targetSdkVersion 30
-        versionCode 4
-        versionName "3.0"
+        targetSdkVersion 32
+        versionCode 7
+        versionName "3.3"
+    }
+    signingConfigs {
+        release {
+            if (project.hasProperty('RELEASE_KEY_ALIAS')) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.hasProperty('RELEASE_KEY_ALIAS')) {
+                signingConfig signingConfigs.release
+            }
         }
     }
+
+	namespace 'com.thermatk.android.xf.fakegapps'
 }
 
 dependencies {
