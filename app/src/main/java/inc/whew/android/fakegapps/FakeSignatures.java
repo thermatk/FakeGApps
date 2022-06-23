@@ -1,4 +1,4 @@
-package com.thermatk.android.xf.fakegapps;
+package inc.whew.android.fakegapps;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.Signature;
