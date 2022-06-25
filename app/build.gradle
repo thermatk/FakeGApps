@@ -7,8 +7,8 @@ android {
         applicationId "inc.whew.android.fakegapps"
         minSdkVersion 15
         targetSdkVersion 32
-        versionCode 8
-        versionName "4"
+        versionCode 9
+        versionName "4.1"
     }
     signingConfigs {
         release {
