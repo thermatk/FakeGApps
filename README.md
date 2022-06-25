@@ -1,5 +1,13 @@
 # FakeGApps
+Used in combination with [MicroG](https://microg.org/) to enable Google Cloud Messaging (GCM) and much more without proprietary Google Play Services.
 
-Used in combinaton with [µg GmsCore](https://github.com/microg/android_packages_apps_GmsCore) to enable Google Cloud Messaging (GCM) and much more.
-This is an Xposed module and such needs LSPosed or compatible installed.
-To install, install the APK from the releases section and enable it in LSPosed Manager. You don't need to tick any checkboxes except the already enabled "system frameworks".
+Supports Android 4.0 - 12.1
+
+## Prerequisites
+- **MicroG** installed (I personally recommend [nift4's microG Installer Revived](https://github.com/nift4/microg_installer_revived) to install MicroG)
+- Working **Xposed Framework** installation (Ex. [LSPosed](https://github.com/LSPosed/LSPosed), [EdXposed](https://github.com/ElderDrivers/EdXposed), [Dreamland](https://github.com/canyie/Dreamland) ...)
+
+## Installation
+Install the APK from the [releases section](https://github.com/whew-inc/FakeGApps/releases) and enable it in your Xposed framework provider. Make sure to enable FakeGapps in your Xposed framework provider.
+
+Reboot your device. If everything went right, MicroG should now have a checkmark next to "System spoofs signature" in its self-check.
