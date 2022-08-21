@@ -1,14 +1,22 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 32
 
+    signingConfigs {
+        TIIEHenry {
+            keyAlias rootProject.ext.keyAlias
+            storeFile rootProject.ext.storeFile
+            storePassword rootProject.ext.storePassword
+            keyPassword rootProject.ext.keyPassword
+        }
+    }
     defaultConfig {
         applicationId "com.thermatk.android.xf.fakegapps"
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 3
-        versionName "2.0"
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 4
+        versionName "2.1"
     }
     buildTypes {
         release {

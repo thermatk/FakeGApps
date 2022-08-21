@@ -19,43 +19,30 @@ public class PackageNameService extends IPackageNameService.Stub {
     private final Context context;
 
     public static void inject() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            XposedBridge.hookAllMethods(XposedHelpers.findClass("android.app.ActivityThread", null),
-                    "systemMain",
-                    new XC_MethodHook() {
-                        @Override
-                        protected void afterHookedMethod(MethodHookParam param) {
-                            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        XposedBridge.hookAllMethods(XposedHelpers.findClass("android.app.ActivityThread", null),
+                "systemMain",
+                new XC_MethodHook() {
+                    @Override
+                    protected void afterHookedMethod(MethodHookParam param) {
+                        ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
-                            XposedBridge.hookAllMethods(
-                                    XposedHelpers.findClass("com.android.server.am.ActivityManagerService", loader),
-                                    "setSystemProcess",
-                                    new XC_MethodHook() {
-                                        @Override
-                                        protected void afterHookedMethod(MethodHookParam param) {
-                                            try {
-                                                register(getContext(param.thisObject));
-                                            } catch (Throwable ex) {
-                                                XposedBridge.log("FakeGApps: Adding the package name service failed.");
-                                            }
+                        XposedBridge.hookAllMethods(
+                                XposedHelpers.findClass("com.android.server.am.ActivityManagerService", loader),
+                                "setSystemProcess",
+                                new XC_MethodHook() {
+                                    @Override
+                                    protected void afterHookedMethod(MethodHookParam param) {
+                                        try {
+                                            register(getContext(param.thisObject));
+                                        } catch (Throwable ex) {
+                                            XposedBridge.log("FakeGApps: Adding the package name service failed.");
                                         }
                                     }
-                            );
-                        }
+                                }
+                        );
                     }
-            );
-        } else {
-            XposedBridge.hookAllMethods(
-                    XposedHelpers.findClass("com.android.server.am.ActivityManagerService", null),
-                    "main",
-                    new XC_MethodHook() {
-                        @Override
-                        protected final void afterHookedMethod(final MethodHookParam param) {
-                            register((Context) param.getResult());
-                        }
-                    }
-            );
-        }
+                }
+        );
     }
 
     private static void register(Context context) {
