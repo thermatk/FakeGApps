@@ -2,20 +2,44 @@
 
 buildscript {
     repositories {
-        jcenter()
+        maven { url 'https://maven.aliyun.com/repository/public/' } //jcenter和central
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
+        maven { url 'https://maven.fabric.io/public' }
         google()
+        mavenLocal()
+        mavenCentral()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    ext.kotlin_version = "1.6.10"
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    Properties keyProps = new Properties()
+    keyProps.load(file(/*System.getenv("GRADLE_USER_HOME") +*/ "D:/Android/KEY/key.properties").newDataInputStream())
+
+    ext.keyAlias = keyProps['keyAlias'].toString()
+    ext.storeFile = file(keyProps['storeFile'].toString())
+    ext.storePassword = keyProps['storePassword'].toString()
+    ext.keyPassword = keyProps['keyPassword'].toString()
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.0'
+
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
+        maven { url 'https://maven.aliyun.com/repository/public/' } //jcenter和central
+        maven { url 'https://maven.aliyun.com/repository/google/' }
+        maven { url "https://jitpack.io" }
+        mavenLocal()
+        mavenCentral()
         google()
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

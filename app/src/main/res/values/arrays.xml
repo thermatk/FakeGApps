@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="xposed_scope">
+		<item>com.google.android.GoogleCamera.Urnyx</item>
+		<item>com.android.vending</item>
+		<item>com.google.ar.core</item>
+		<item>org.microg.gms.droidguard</item>
+		<item>com.google.android.gms</item>
+		<item>com.google.android.gsf</item>
+		<item>com.google.android.youtube</item>
+	</string-array>
+	<string-array name="xposed_init">
+		<item>com.thermatk.android.xf.fakegapps.FakeSignatures</item>
+		<item>com.thermatk.android.xf.fakegapps.PackageNameServiceHook</item>
+	</string-array>
+</resources>
