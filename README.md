@@ -8,6 +8,10 @@ Used in combinaton with [µg GmsCore](https://github.com/microg/android_packages
 
 This tutorial describes only the installation process to get GCM working. The also available Google Play Store replacement Blankstore is not discussed here.
 
+## Presentation
+
+(list differences with other GApps, particularity of that one)
+
 ## Installation for Android with root access and without Gapps
 
 * Install Xposed 
